@@ -1,0 +1,17 @@
+<!-- 13 -->
+{% extends "base.html" %}
+
+{% block title %}
+  Библиотека Bookworld
+{% endblock %}
+{% block content %}
+<h1 class="text-center">Библиотека Bookworld</h1>
+{% if page_obj %}
+  {% for post in page_obj %}
+    <article class="mb-5">
+      {% include "includes/post_card.html" %}
+    </article>
+  {% endfor %}
+{% endif %}
+  {% include "includes/paginator.html" %}
+{% endblock %}

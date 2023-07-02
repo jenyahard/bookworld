@@ -1,0 +1,43 @@
+<!-- 5 -->
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+{% if "/deletecomment/" in request.path %}
+  <h1>Удалить комментарий {{ page_obj.pk }}?</h1>
+  <div class="card col-8 m-3">
+    <div class="card-header">
+      Карточка комментария:
+    </div>
+    <small class="card-body">
+        <b>Комментарий:</b> {{ page_obj.text }}<br>
+        <b>К книге:</b> {{ page_obj.book }}<br>
+        <b>Автор комментария:</b> {{ page_obj.author }}<br>
+        <b>От:</b> {{ page_obj.created_at }}
+    </small>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_button button_type="submit" content="Удалить" %}
+      </form>
+    </div>
+  </div>
+{% else %}
+<h1>Удалить книгу {{ page_obj.pk }}?</h1>
+<div class="card col-8 m-3">
+  <div class="card-header">
+    Удаление книги
+  </div>
+  <small class="card-body">
+        <b>Книга:</b> {{ page_obj.title }}<br>
+        <b>Описание книги :</b> {{ page_obj.text }}<br>
+        <b>Автор(ы) книги:</b> {% for author in page_obj.author.all %}{{ author.author_name }} | {% endfor %}<br>
+    </small>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_button button_type="submit" content="Удалить" %}
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock content %} 

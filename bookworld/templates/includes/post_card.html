@@ -1,0 +1,26 @@
+<!-- 12 -->
+<div class="col d-flex justify-content-center">
+  <div class="card" style="width: 40rem;">
+    <div class="card-body">
+      {% if post.image %}
+        <a href="{% url 'book:book_detail' post.id %}" target="_blank">
+          <img class="border-3 rounded img-fluid img-thumbnail mb-2 mx-auto d-block" src="{{ post.image.url }}">
+        </a>
+      {% endif %}
+      <h5 class="card-title"><a href="{% url 'book:book_detail' post.id %}">{{ post.title }}</a></h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <small>
+          {% if post.is_archived %}
+            <p class="text-danger">Пост снят с публикации админом</p>
+          {% endif %}
+          От авторов:
+          {% for author in post.author.all %}
+            |<a class="text-muted" href="{% url 'book:profile' author.id %}">@{{ author.author_name }}</a>|
+          {% endfor %}
+        </small>
+      </h6>
+      <p class="card-text">{{ post.text|truncatewords:18 }}</p>
+      <a href="{% url 'book:book_detail' post.id %}" class="card-link text-muted">Комментарии ({{ post.comment_count }})</a>  
+    </div>
+  </div>
+</div>  

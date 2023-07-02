@@ -1,0 +1,43 @@
+<!-- 2 -->
+{% extends "base.html" %}
+{% block title %}
+  Книга {{ page_obj.title }}
+{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-body">
+        {% if page_obj.image %}
+          <a href="{{ page_obj.image.url }}" target="_blank">
+            <img class="border-3 rounded img-fluid img-thumbnail mb-2 mx-auto d-block" src="{{ page_obj.image.url }}">
+          </a>
+        {% endif %}
+        <h5 class="card-title">{{ page_obj.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <small>
+            {% if page_obj.is_archived %}
+              <p class="text-danger">Пост снят с публикации админом</p>
+            {% endif %}
+            <br>
+            От авторов:
+            {% for author in page_obj.author.all %}
+              |<a class="text-muted" href="{% url 'book:profile' author.id %}">@{{ author.author_name }}</a>|
+            {% endfor %}
+          </small>  
+        </h6>
+        <p class="card-text">{{ page_obj.text|linebreaksbr }}</p>
+        {% if user.username == page_obj.author.first.userdata.username %}
+          <div class="mb-2">
+            <a class="btn btn-sm text-muted" href="{% url 'book:edit_book' page_obj.id %}" role="button">
+              Отредактировать публикацию книги
+            </a>
+            <a class="btn btn-sm text-muted" href="{% url 'book:delete_book' page_obj.id %}" role="button">
+              Удалить публикацию книги
+            </a>
+          </div>
+        {% endif %}
+        {% include "includes/comments.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

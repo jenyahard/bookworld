@@ -1,0 +1,38 @@
+<!-- 8 -->
+{% if user.is_authenticated %}
+  {% load django_bootstrap5 %}
+  <h5 class="mb-4">Оставить комментарий</h5>
+  <form method="post" action="{% url 'book:add_comment' page_obj.pk %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Отправить" %}
+  </form>   
+{% endif %}
+<br>
+{% if comments %}
+{% for comment in comments %}
+  <div class="media mb-4">
+    <div class="media-body">
+      <h5 class="mt-0">
+        <a href="{% url 'book:profile' comment.author.id %}" name="comment_{{ comment.id }}">
+          Комментарий от: @{{ comment.author }}
+        </a>
+      </h5>
+      <small class="text-muted">{{ comment.created_at }}</small>
+      <br>
+      {{ comment.text|linebreaksbr }}
+    </div>
+    {% if request.user == comment.author.userdata %}
+      <a class="btn btn-sm text-muted" href="{% url 'book:edit_comment' page_obj.id comment.id %}" role="button">
+        Отредактировать комментарий
+      </a>
+      <a class="btn btn-sm text-muted" href="{% url 'book:delete_comment' page_obj.id comment.id %}" role="button">
+        Удалить комментарий
+      </a>
+      <hr>
+    {% endif %}
+  </div>
+{% endfor %}
+{% else %}
+<p>К этой книге еще нет комментариев! Будь первым!</p>
+{% endif %}

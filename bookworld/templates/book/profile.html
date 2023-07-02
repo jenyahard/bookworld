@@ -1,0 +1,26 @@
+<!-- 6 -->
+{% extends "base.html" %}
+{% block title %}
+  Книги автора:{{ author }}
+{% endblock %}
+{% block content %}
+  <h1 class="mb-5 text-center">Книги автора: {{ author }}</h1>
+  <small>
+      {% if user.is_authenticated and request.user == author.userdata %}
+      <h5 class="mb-5 text-center">Здесь Вы можете отредактировать Ваш профиль, сменить пароль или отредактировать Ваши публиккации</h5>
+      <ul class="list-group list-group-horizontal justify-content-center">
+        <a class="btn btn-sm text-muted" href="{% url 'book:edit_profile' request.user.id %}">Редактировать профиль</a>
+        <a class="btn btn-sm text-muted" href="{% url 'password_change' %}">Изменить пароль</a>
+      </ul>
+    <h5 class="mb-5 text-center">Ваши публикации:</h5>
+      {% endif %}
+
+  </small>
+  <br>
+  {% for post in page_obj %}
+    <article class="mb-5">
+      {% include "includes/post_card.html" %}
+    </article>
+  {% endfor %}
+  {% include "includes/paginator.html" %}
+{% endblock %}

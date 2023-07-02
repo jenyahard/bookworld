@@ -1,0 +1,41 @@
+db.sqlite3
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+
+
+# Папки, создаваемые средой разработки
+.idea
+.DS_Store
+.AppleDouble
+.LSOverride
+
+*.sublime-project
+*.sublime-workspace
+
+.vscode/
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+.mypy_cache
+
+# папки со статикой и медиа
+media/
+sent_emails/
+
+# изображения
+*.jpg
