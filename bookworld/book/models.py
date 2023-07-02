@@ -6,7 +6,7 @@ class Author(models.Model):
     userdata = models.OneToOneField(User,
                                     on_delete=models.CASCADE,
                                     verbose_name='Аккаунт автора',
-                                     )
+                                    )
     author_name = models.CharField(
         max_length=256,
         verbose_name='Имя автора книги',

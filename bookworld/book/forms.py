@@ -18,7 +18,8 @@ class BookForm(forms.ModelForm):
 
 
 class RegistrationForm(UserCreationForm):
-    author_name = forms.CharField(label='Имя автора книги для отображения на сайте')
+    author_name = forms.CharField(label='Имя автора книги'
+                                  'для отображения на сайте')
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -33,4 +34,4 @@ class RegistrationForm(UserCreationForm):
         author.author_name = author_name
         author.save()
 
-        return user 
+        return user

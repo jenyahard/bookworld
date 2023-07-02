@@ -10,7 +10,12 @@ admin.site.site_header = 'Администрирование блога'
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'display_authors', 'text', 'display_image', 'is_archived']
+    list_display = ['title',
+                    'display_authors',
+                    'text',
+                    'display_image',
+                    'is_archived'
+                    ]
 
     def display_image(self, obj):
         if obj.image:
@@ -35,7 +40,9 @@ class AuthorAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        queryset = queryset.annotate(book_count=Count('author'), comment_count=Count('author__comment'))
+        queryset = queryset.annotate(book_count=Count('author'),
+                                     comment_count=Count('author__comment')
+                                     )
         return queryset
 
     def book_count(self, obj):

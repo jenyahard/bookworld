@@ -51,15 +51,16 @@ class ProfileView(DetailView):
                 'page_obj': paginator_custom(self, self.get_books(author))
             }
         except Author.DoesNotExist:
-            return redirect('book:index')  # Выполняем перенаправление на 'book:index'
+            return redirect('book:index')
 
         return super().dispatch(request, *args, **kwargs)
 
     def get_books(self, author):
-        return self.get_queryset().annotate(comment_count=Count('comment')).filter(
-            author=author, is_archived=False).order_by('-id')
-
-
+        return (self.get_queryset()
+                .annotate(comment_count=Count('comment'))
+                .filter(author=author, is_archived=False)
+                .order_by('-id')
+                )
 
 
 class BookDetailView(DetailView):
@@ -135,7 +136,7 @@ class DeleteCommentView(LoginRequiredMixin, DeleteView):
     model = Comment
     template_name = 'book/post_confirm_delete.html'
     context_object_name = 'page_obj'
-    
+
     def get_object(self):
         return get_object_or_404(Comment, id=self.kwargs['comment_id'])
 
@@ -191,7 +192,7 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_object(self):
         return get_object_or_404(self.model, pk=self.kwargs['pk'])
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:

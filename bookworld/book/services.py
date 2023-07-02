@@ -1,6 +1,5 @@
 from django.db.models.query import QuerySet
 from django.core.paginator import Paginator
-from django.db.models import Count
 
 
 def paginator_custom(self, objects: QuerySet):
